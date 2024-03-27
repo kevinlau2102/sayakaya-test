@@ -44,7 +44,7 @@ func (ps *PromoService) GeneratePromoCode(userID int) (string, error) {
 	return promoCode, nil
 }
 
-func (ps *PromoService) CheckPromoCode(code string) (entity.Promo, error) {
+func (ps *PromoService) CheckPromoCode(code string, userID int) (entity.Promo, error) {
 	promo, err := ps.PromoRepository.GetPromo(code)
 
 	if err != nil {
@@ -53,6 +53,10 @@ func (ps *PromoService) CheckPromoCode(code string) (entity.Promo, error) {
 
 	if promo.ID == 0 {
 		return promo, fmt.Errorf("Promo code not found")
+	}
+
+	if promo.UserID != userID {
+		return promo, fmt.Errorf("Promo code is not valid for this user")
 	}
 
 	promoEndDate, _ := time.Parse("2006-01-02T15:04:05Z", promo.EndDate)

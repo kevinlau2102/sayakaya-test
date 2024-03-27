@@ -17,5 +17,5 @@ type PromoRepository interface {
 
 type PromoService interface {
 	GeneratePromoCode(userID int) (string, error)
-	CheckPromoCode(code string) (Promo, error)
+	CheckPromoCode(code string, userID int) (Promo, error)
 }
