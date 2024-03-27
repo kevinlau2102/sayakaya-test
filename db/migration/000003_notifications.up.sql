@@ -1,0 +1,12 @@
+BEGIN;
+
+CREATE TABLE IF NOT EXISTS notifications (
+    id SERIAL PRIMARY KEY,
+    notification_type VARCHAR(255) NOT NULL,
+    subject TEXT NOT NULL,
+    message TEXT NOT NULL,
+    user_id INT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+    created_at TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+COMMIT;
