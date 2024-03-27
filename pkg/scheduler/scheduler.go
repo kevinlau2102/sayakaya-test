@@ -23,7 +23,7 @@ func RunScheduler(db *sql.DB) {
 
 	s := gocron.NewScheduler(locate)
 
-	s.Every(1).Hour().Do(func() error {
+	s.Every(1).Day().At("00:00").Do(func() error {
 		fmt.Println("Running scheduler")
 		users, err := us.FetchUsers()
 		if err != nil {
@@ -47,7 +47,7 @@ func RunScheduler(db *sql.DB) {
 				if err != nil {
 					return err
 				}
-				
+
 			} else {
 				err := us.UpdateIsBirthday(user.ID, false)
 				if err != nil {
